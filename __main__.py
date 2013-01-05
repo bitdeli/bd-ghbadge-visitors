@@ -43,21 +43,32 @@ def activity(profiles):
     for profile in profiles:
         for repo, visits in profile['repos'].iteritems():
             repos[repo].update(frozenset(recent_days(visits)))
-            
-    pop = list(popularity(repos))
-    text['popular'] = max(pop)
-    text['total'] = sum(visits for visits, repo in pop)
-    
-    yield {'type': 'text',
-           'size': (12, 1),
-           'head': 'Daily Unique Visitors'}
-    
-    for repo, stats in sorted(repos.iteritems()):
-        yield {'type': 'line',
-               'label': repo.split('/')[1],
-               'data': list(timeline(stats)),
-               'size': (6, 2)}
-            
+
+    if repos:
+        pop = list(popularity(repos))
+        text['popular'] = max(pop)
+        text['total'] = sum(visits for visits, repo in pop)
+        
+        yield {'type': 'text',
+               'size': (12, 1),
+               'head': 'Daily Unique Visitors'}
+        
+        for repo, stats in sorted(repos.iteritems()):
+            yield {'type': 'line',
+                   'label': repo.split('/')[1],
+                   'data': list(timeline(stats)),
+                   'size': (6, 2)}
+    else:
+        yield {'type': 'text',
+               'size': (12, 1),
+               'color': 3,
+               'head': 'Bummer! No data yet'}
+        yield {'type': 'text',
+               'size': (12, 2),
+               'text': """It may take an hour for the first
+                          visits to appear after you have added the badge
+                          for the first time."""}
+                
 Profiles().map(activity).show()    
 
 Profiles().map(countries).show('map',
