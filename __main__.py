@@ -16,8 +16,9 @@ text = {'window': TIMELINE_DAYS}
 def countries(profiles):
     stats = Counter()
     for profile in profiles:
-        country = geoip.record_by_addr(profile.uid)['country_code']
-        stats[country] += 1
+        country = geoip.record_by_addr(profile.uid)
+        if country:
+            stats[country['country_code']] += 1
     yield stats
 
 def activity(profiles):
