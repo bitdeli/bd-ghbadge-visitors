@@ -75,10 +75,14 @@ Profiles().map(activity).show()
 Profiles().map(countries).show('map',
                                label='Visitors',
                                size=(12, 4))
-            
-Title("Repos have {total} daily unique visitors in total over the last {window} days",
-      text)
 
-Description("The most popular repository is *{popular[1]}* with {popular[0]} visitors.",
-            text)
-
+if total in text:
+    Title("Repos have {total} daily unique visitors in total over the last "
+          "{window} days",
+          text)
+    Description("The most popular repository is *{popular[1]}* with "
+                "{popular[0]} visitors.",
+                text)
+else:
+    Title("First badge added!")
+    Description("It takes about an hour for the real data to start flowing in.")
