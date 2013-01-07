@@ -76,7 +76,7 @@ Profiles().map(countries).show('map',
                                label='Visitors',
                                size=(12, 4))
 
-if total in text:
+if 'total' in text:
     Title("Repos have {total} daily unique visitors in total over the last "
           "{window} days",
           text)
