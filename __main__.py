@@ -50,6 +50,13 @@ def activity(profiles):
         text['popular'] = max(pop)
         text['total'] = sum(visits for visits, repo in pop)
         
+        Title("Repos have {total} daily unique visitors in total "
+              "over the last {window} days",
+              text)
+        Description("The most popular repository is *{popular[1]}* with "
+                    "{popular[0]} visitors.",
+                    text)
+        
         yield {'type': 'text',
                'size': (12, 1),
                'head': 'Daily Unique Visitors'}
@@ -60,6 +67,9 @@ def activity(profiles):
                    'data': list(timeline(stats)),
                    'size': (6, 2)}
     else:
+        Title("First badge added!")
+        Description("It takes about an hour for the real data "
+                    "to start flowing in.")
         yield {'type': 'text',
                'size': (12, 1),
                'color': 3,
@@ -76,13 +86,3 @@ Profiles().map(countries).show('map',
                                label='Visitors',
                                size=(12, 4))
 
-if 'total' in text:
-    Title("Repos have {total} daily unique visitors in total over the last "
-          "{window} days",
-          text)
-    Description("The most popular repository is *{popular[1]}* with "
-                "{popular[0]} visitors.",
-                text)
-else:
-    Title("First badge added!")
-    Description("It takes about an hour for the real data to start flowing in.")
