@@ -2,6 +2,7 @@ from bitdeli.widgets import set_theme, Description, Title
 from bitdeli.chain import Profiles
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta
+from urlparse import urlparse
 import GeoIP
 
 set_theme('eighties')
@@ -43,7 +44,8 @@ def activity(profiles):
     repos = defaultdict(Counter)
     for profile in profiles:
         for repo, visits in profile['repos'].iteritems():
-            repos[repo].update(frozenset(recent_days(visits)))
+            path = urlparse(repo).path
+            repos[path].update(frozenset(recent_days(visits)))
 
     if repos:
         pop = list(popularity(repos))
